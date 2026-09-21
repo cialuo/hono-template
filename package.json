@@ -1,0 +1,125 @@
+{
+  "name": "hono-template",
+  "version": "0.1.0",
+  "description": "基于 Hono 和 TypeScript 的云函数模板，支持 Vercel/Cloudflare Workers/Docker/Node.js 等多种部署方式",
+  "author": "CaoMeiYouRen",
+  "private": true,
+  "license": "MIT",
+  "main": "dist/index.mjs",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "lint": "cross-env NODE_ENV=production eslint src --fix --ext .ts,.js,.cjs,.mjs",
+    "typecheck": "tsc --noEmit",
+    "prebuild": "rimraf dist",
+    "build": "cross-env NODE_ENV=production tsdown",
+    "dev": "cross-env NODE_ENV=development tsx watch src/index.ts",
+    "dev:tsup": "cross-env NODE_ENV=development tsdown --watch",
+    "start": "node ./dist/index.mjs",
+    "start:tsx": "cross-env NODE_ENV=production tsx src/index.ts",
+    "start:benchmarks": "cross-env NODE_ENV=test BENCHMARKS_TEST=true node dist/index.mjs",
+    "start:benchmarks:bun": "cross-env NODE_ENV=test BENCHMARKS_TEST=true bun dist/bun.mjs",
+    "release": "semantic-release",
+    "commit": "cz",
+    "prepare": "husky",
+    "test": "vitest run",
+    "test:benchmarks": "tsx scripts/benchmarks.ts",
+    "test:benchmarks:bun": "bun scripts/benchmarks.ts",
+    "dev:vercel": "vercel dev",
+    "deploy:vercel": "vercel",
+    "dev:wrangler": "wrangler dev --env dev",
+    "deploy:wrangler": "wrangler deploy",
+    "dev:bun": "cross-env NODE_ENV=development bun --watch src/bun.ts"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260917.1",
+    "@commitlint/cli": "^21.2.2",
+    "@types/autocannon": "^7.12.7",
+    "@types/bun": "^1.4.2",
+    "@types/debug": "^4.1.13",
+    "@types/fs-extra": "^11.0.4",
+    "@types/lodash-es": "^4.17.12",
+    "@types/node": "^26.6.1",
+    "@vercel/nft": "^1.11.0",
+    "autocannon": "^8.0.0",
+    "commitizen": "^4.3.2",
+    "commitlint-config-cmyr": "^1.0.1",
+    "cross-env": "^10.1.0",
+    "cz-conventional-changelog-cmyr": "^2.0.0",
+    "debug": "^4.4.3",
+    "eslint": "^10.10.0",
+    "eslint-config-cmyr": "2.3.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.5.1",
+    "octokit": "^5.0.5",
+    "rimraf": "^6.1.3",
+    "semantic-release": "^25.0.9",
+    "semantic-release-cmyr-config": "^1.0.2",
+    "tsdown": "^0.23.0",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3",
+    "unrun": "^0.3.1",
+    "vercel": "^59.20.0",
+    "vite": "^8.3.0",
+    "vitest": "^5.0.1",
+    "wrangler": "^4.131.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog-cmyr"
+    }
+  },
+  "changelog": {
+    "language": "zh"
+  },
+  "lint-staged": {
+    "*.{js,ts}": [
+      "npm run lint",
+      "git add"
+    ]
+  },
+  "keywords": [
+    "Hono",
+    "TypeScript",
+    "Vercel",
+    "Docker",
+    "Node.js"
+  ],
+  "homepage": "https://github.com/CaoMeiYouRen/hono-template#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CaoMeiYouRen/hono-template.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CaoMeiYouRen/hono-template/issues"
+  },
+  "dependencies": {
+    "@hono/node-server": "^2.1.1",
+    "await-to-js": "^3.0.0",
+    "better-bytes": "^1.2.6",
+    "dayjs": "^1.11.23",
+    "dotenv": "^17.4.2",
+    "fs-extra": "^11.4.0",
+    "hono": "^4.13.8",
+    "isomorphic-unfetch": "^4.0.2",
+    "lodash-es": "^4.18.1",
+    "tslib": "^2.8.1",
+    "winston": "^3.19.0",
+    "winston-daily-rotate-file": "^5.0.0"
+  },
+  "type": "module",
+  "packageManager": "pnpm@11.2.2"
+}
